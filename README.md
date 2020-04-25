@@ -1,2 +1,2 @@
 # alquimia
-Repositorio del módulo de Odoo para cpalquimia
+Módulo de implantación alquimia club

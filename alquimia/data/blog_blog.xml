@@ -1,0 +1,16 @@
+<odoo noupdate="1">
+<data>
+	<record model="blog.blog" id="blog_noticias">
+		<field name="name">Noticias</field>
+		<field name="subtitle">Blog Público de Noticias</field>
+	</record>
+	<record model="blog.blog" id="blog_entrenadores">
+		<field name="name">Adestradores</field>
+		<field name="subtitle">Blog Privado Adestradores</field>
+	</record>
+	<record model="blog.blog" id="blog_socios">
+		<field name="name">Socios</field>
+		<field name="subtitle">Blog Privado Socios</field>
+	</record>
+</data>
+</odoo>

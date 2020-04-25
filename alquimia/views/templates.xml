@@ -1,0 +1,146 @@
+<odoo>
+    <data>
+      <!-- ocultación de detalles del usuario en portal -->
+      <template id="portal_my_details_restricted" inherit_id="portal.portal_my_details">
+          <xpath expr="//div" position="attributes">
+            <attribute name="groups">base.group_user</attribute>
+          </xpath>        
+      </template>
+
+      <!-- colocación del iframe del vídeo en blog post -->
+      <template id="blog_post_alquimia" inherit_id="website_blog.blog_post_content">        
+          <xpath expr="//div[@t-field='blog_post.content']" position="after">            
+            <div t-if="blog_post.iframe_code" id="o_wblog_video" style="--aspect-ratio: 16/9;" align="center">
+                <t t-raw="blog_post.iframe_code"/>       
+            </div>
+            <br/>
+            <t t-call="website_blog.opt_blog_post_share_links_display" />
+          </xpath>        
+      </template>
+
+      <!-- quitar del pie el brand_promotion de odoo -->
+      <template id="brand_promotion_quitar" inherit_id="web.brand_promotion">        
+          <xpath expr="//div[@class='o_brand_promotion']" position="replace">            
+            <div>     
+            </div>
+          </xpath>        
+      </template>
+
+      <!-- traducción del texto SHARE THIS POST del blog share_links y quitar botón para Linkedin -->
+      <template id="opt_blog_post_share_links_display_traducido" inherit_id="website_blog.opt_blog_post_share_links_display">        
+          <xpath expr="//h6" position="replace">
+            <h6 class="text-uppercase pb-3 mb-4 border-bottom font-weight-bold">Comparte este post</h6>
+          </xpath>
+          <xpath expr="//div[@class='o_wblog_social_links d-flex flex-wrap mx-n1']" position="replace">
+             <div class="o_wblog_social_links d-flex flex-wrap mx-n1">
+                <t t-set="classes">bg-100 border mx-1 mb-2 rounded-circle d-flex align-items-center justify-content-center text-decoration-none</t>
+                <a href="#" aria-label="Facebook" title="Share on Facebook" t-attf-class="o_facebook #{classes}"><i class="fa fa-facebook-square text-facebook"/></a>
+                <a href="#" aria-label="Twitter" title="Share on Twitter" t-attf-class="o_twitter #{classes}"><i class="fa fa-twitter text-twitter" aria-label="Twitter" title="Twitter"/></a>
+                <!--a href="#" aria-label="LinkedIn" title="Share on LinkedIn" t-attf-class="o_linkedin #{classes}"><i class="fa fa-linkedin text-linkedin" aria-label="LinkedIn" title="LinkedIn"/></a-->
+            </div>
+          </xpath>
+      </template>
+
+      <!-- redistribución del cover en encabezado de blog post -->
+      <template id="opt_blog_post_regular_cover_adaptado" inherit_id="website_blog.opt_blog_post_regular_cover">
+          <xpath expr="//div[@id='title']" position="replace">
+            <div id="title" t-attf-class="blog_header o_wblog_regular_cover_container #{readableClass}">
+
+                <t t-if="opt_blog_post_breadcrumb" t-call="website_blog.post_breadcrumbs">
+                    <t t-set="additionnal_classes" t-value="'mt-4 mb-3 bg-transparent'"/>
+                </t>
+                
+                <t t-call="website.record_cover">
+                    <t t-set="_record" t-value="blog_post"/>
+                    <t t-set="additionnal_classes" t-value="'o_wblog_post_page_cover o_wblog_post_page_cover_regular rounded shadow overflow-hidden'"/>
+                    <t t-set="use_size" t-value="True"/>
+                </t>
+
+                <div t-att-class="not opt_blog_post_breadcrumb and 'pt-4'">
+                    <div t-attf-class="o_wblog_post_title mb-3 #{'js_tweet' if opt_blog_post_select_to_tweet else ''} #{'js_comment' if opt_blog_post_select_to_comment else ''}" t-ignore="False">
+                        <div t-field="blog_post.name" id="o_wblog_post_name" data-oe-expression="blog_post.name" t-att-data-blog-id="blog_post.id" placeholder="Title"/>
+                        <div t-field="blog_post.subtitle" id="o_wblog_post_subtitle" placeholder="Subtitle"/>
+                    </div>
+                    <div class="text-muted mb-2">
+                        <i class="fa fa-clock-o fa-fw"/>
+                        <span t-field="blog_post.post_date" class="text-muted" t-options="{&quot;format&quot;: &quot;d MMMM, yyyy&quot;}"/>
+                        <span>by
+                            <t t-call="website_blog.post_author">
+                                <t t-set="additionnal_classes" t-value="'d-inline-flex mr-2'"/>
+                                <t t-set="hide_date" t-value="True"/>
+                            </t>
+                        </span>
+                        <span t-if="len(blog_post.message_ids) &gt; 0" class="text-nowrap pl-2">|
+                            <i class="fa fa-comment text-muted mr-1"/><t t-esc="len(blog_post.message_ids)"/>
+                            <t t-if="len(blog_post.message_ids)&gt;1">Comments</t>
+                            <t t-else="">Comment</t>
+                        </span>
+                        <span t-elif="opt_blog_post_comment">| No comments yet</span>
+                    </div>
+                </div>
+            </div>
+          </xpath>        
+      </template>
+
+      <!-- incorporación del css para redimendión del iframe -->
+      <template id="assets_frontend" name="alquimia_assets" inherit_id="web.assets_frontend">        
+          <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/alquimia/static/src/css/alquimia.css"/>
+          </xpath>        
+      </template>
+  
+      <!--template id="entrenadores_privada">
+        <t t-name="website.privada.entrenadores">
+          <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+              <section class="s_latest_posts_big_picture pt16 pb16" data-name="Latest Posts - Big Images" style="">
+                <div class="container">
+                  <h2 style="text-align: center">Zona Privada Entrenadores</h2>
+                  <div class="row s_col_no_bgcolor s_nb_column_fixed js_get_posts" data-loading="true" 
+                       data-template="website_blog.s_latest_posts_big_picture_template"
+                       t-attf-data-filter-by-blog-id="{{ blog_id }}"/>
+                </div>
+              </section>
+            </div>
+          </t>
+        </t>
+      </template>
+
+      <template id="socios_privada">
+        <t t-name="website.privada.socios">
+          <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+              <section class="s_latest_posts_big_picture pt16 pb16" data-name="Latest Posts - Big Images" style="">
+                <div class="container">
+                  <h2 style="text-align: center">Zona Privada Socios</h2>
+                  <div class="row s_col_no_bgcolor s_nb_column_fixed js_get_posts" data-loading="true" 
+                      data-template="website_blog.s_latest_posts_big_picture_template"
+                      t-attf-data-filter-by-blog-id="{{ blog_id }}"/>
+                </div>
+              </section>
+            </div>
+          </t>
+        </t>
+      </template-->
+<!--
+        <template id="listing">
+          <ul>
+            <li t-foreach="objects" t-as="object">
+              <a t-attf-href="#{ root }/objects/#{ object.id }">
+                <t t-esc="object.display_name"/>
+              </a>
+            </li>
+          </ul>
+        </template>
+        <template id="object">
+          <h1><t t-esc="object.display_name"/></h1>
+          <dl>
+            <t t-foreach="object._fields" t-as="field">
+              <dt><t t-esc="field"/></dt>
+              <dd><t t-esc="object[field]"/></dd>
+            </t>
+          </dl>
+        </template>
+-->
+    </data>
+</odoo>

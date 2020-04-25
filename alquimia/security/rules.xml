@@ -1,0 +1,34 @@
+<odoo>
+<data>
+	<record model="ir.rule" id="blog_acceso_general">
+		<field name="name">Regla acceso blog publico</field>
+		<field name="model_id" ref="website_blog.model_blog_blog"/>
+		<field name="perm_read">True</field>
+		<field name="perm_write">False</field>
+		<field name="perm_create">False</field>
+		<field name="perm_unlink">False</field>
+		<field name="domain_force">[('name','ilike','Noticias')]</field>
+		<field name="groups" eval="[(4, ref('base.group_public'))]"/>
+	</record>
+	<record model="ir.rule" id="blog_acceso_entrenador">
+		<field name="name">Regla acceso blog entrenadores</field>
+		<field name="model_id" ref="website_blog.model_blog_blog"/>
+		<field name="perm_read">True</field>
+		<field name="perm_write">False</field>
+		<field name="perm_create">False</field>
+		<field name="perm_unlink">False</field>
+		<field name="domain_force">['|',('name','ilike','Adestradores'),('name','ilike','Noticias')]</field>
+		<field name="groups" eval="[(4, ref('alquimia.entrenador_group_portal'))]"/>
+	</record>
+	<record model="ir.rule" id="blog_acceso_socio">
+		<field name="name">Regla acceso blog socios</field>
+		<field name="model_id" ref="website_blog.model_blog_blog"/>
+		<field name="perm_read">True</field>
+		<field name="perm_write">False</field>
+		<field name="perm_create">False</field>
+		<field name="perm_unlink">False</field>
+		<field name="domain_force">['|',('name','ilike','Socios'),('name','ilike','Noticias')]</field>
+		<field name="groups" eval="[(4, ref('alquimia.socio_group_portal'))]"/>
+	</record>
+</data>
+</odoo>

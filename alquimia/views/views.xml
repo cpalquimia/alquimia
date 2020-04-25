@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="alquimia.blog_blog_form">
+      <field name="name">Entrada Blog con Visor de Vídeo</field>
+      <field name="model">blog.post</field>
+      <field name="inherit_id" ref="website_blog.view_blog_post_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='publishing_details']" position="before">
+                <group name="publishing_video" string="Publicación con Vídeo">
+                  <field name="iframe_code"/>
+                </group>
+        </xpath>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="alquimia.action_window">
+      <field name="name">alquimia window</field>
+      <field name="res_model">alquimia.alquimia</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="alquimia.action_server">
+      <field name="name">alquimia server</field>
+      <field name="model_id" ref="model_alquimia_alquimia"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="alquimia" id="alquimia.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="alquimia.menu_1" parent="alquimia.menu_root"/>
+    <menuitem name="Menu 2" id="alquimia.menu_2" parent="alquimia.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="alquimia.menu_1_list" parent="alquimia.menu_1"
+              action="alquimia.action_window"/>
+    <menuitem name="Server to list" id="alquimia" parent="alquimia.menu_2"
+              action="alquimia.action_server"/>
+-->
+  </data>
+</odoo>

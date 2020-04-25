@@ -1,0 +1,37 @@
+<odoo>
+<data noupdate="1">
+	<record model="ir.module.category" id="blog_module_management">
+		<field name="name">Acceso Entradas Privadas Blog</field>
+		<field name="description">Acceso privado módulo Blog</field>
+		<field name="sequence">3</field>
+	</record>
+	<record id="entrenador_group_portal" model="res.groups">
+		<field name="name">Adestrador</field>
+		<field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+		<field name="category_id" ref="alquimia.blog_module_management"/>
+	</record>
+	<record id="socio_group_portal" model="res.groups">
+		<field name="name">Socio</field>
+		<field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+		<field name="category_id" ref="alquimia.blog_module_management"/>
+	</record>
+	<record id="entrenador_partner" model="res.partner">
+		<field name="name">adestrador</field>
+	</record>
+	<record id="socio_partner" model="res.partner">
+		<field name="name">socio</field>
+	</record>
+	<record id="entrenador_user" model="res.users">
+		<field name="login">adestrador</field>
+ 		<field name="comment">Usuario adestrador generico</field>
+  		<field name="groups_id" eval="[(4, ref('alquimia.entrenador_group_portal'))]"/>
+		<field name="partner_id" ref="alquimia.entrenador_partner"/>
+	</record>
+	<record id="socio_user" model="res.users">
+		<field name="login">socio</field>
+ 		<field name="comment">Usuario socio generico</field>
+  		<field name="groups_id" eval="[(4, ref('alquimia.socio_group_portal'))]"/>
+		<field name="partner_id" ref="alquimia.socio_partner"/>
+	</record>
+</data>
+</odoo>
